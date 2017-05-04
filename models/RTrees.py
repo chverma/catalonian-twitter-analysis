@@ -1,5 +1,5 @@
 import numpy as np
-from classes.StatModel import StatModel
+from models.StatModel import StatModel
 import cv2
 import utils.defaults as defaults
 class RTrees(StatModel):

@@ -1,7 +1,7 @@
 import numpy as np
 import utils.defaults as defaults
 import cv2
-from classes.StatModel import StatModel
+from models.StatModel import StatModel
 class MLP(StatModel):
     def __init__(self, nh, nh2):
         self.model = cv2.ANN_MLP()

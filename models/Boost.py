@@ -3,7 +3,7 @@ import utils.defaults as defaults
 import cv2
 #Note
 #In case of LogitBoost and Gentle AdaBoost, each weak predictor is a regression tree, rather than a classification tree. Even in case of Discrete AdaBoost and Real AdaBoost, the CvBoostTree::predict return value (CvDTreeNode::value) is not an output class label. A negative value "votes" for class #0, a positive value - for class #1. The votes are weighted. The weight of each individual tree may be increased or decreased using the method CvBoostTree::scale.
-from classes.StatModel import StatModel
+from models.StatModel import StatModel
 class Boost(StatModel):
     def __init__(self,maxDepth,dummy1):
         self.model = cv2.Boost()
