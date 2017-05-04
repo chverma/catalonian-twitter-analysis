@@ -1,15 +1,17 @@
 import nltk
 import argparse
+import numpy
 
 tokenize = lambda text: nltk.tokenize.word_tokenize(text, language='spanish')
 stop_punkt = '.,:;¡!¿?#-@http'
 
 
 def get_contents(csv):
-    return (line.split(',', maxsplit=1)[-1] for line in csv)
+    return (line.split(':::', maxsplit=1)[-1] for line in csv)
 
 
 def train_bag_of_words(csv):
+    print("  estimant bag_of_words...")
     d = {}
     k = 1
     for message in get_contents(csv):
@@ -17,7 +19,8 @@ def train_bag_of_words(csv):
             if token not in stop_punkt:
                 d[token] = k
                 k += 1
-
+    
+    
     def bag_of_words(message):
         representation = [0] * (k + 1)
         for token in tokenize(message):
@@ -38,8 +41,9 @@ if __name__ == '__main__':
     train_file = args.train[0]
     test_file = args.test[0]
     
-    train = open(train_file, 'r', encoding='utf8').readlines()
-    test = open(test_file, 'r', encoding='utf8').readlines()
+    train_set = open(train_file, 'r', encoding='utf8').readlines()
+    test_set = open(test_file, 'r', encoding='utf8').readlines()
     
-    bag_of_words = train_bag_of_words(get_contents(train))
-    print(list(map(bag_of_words, get_contents(test)))[0])
+    preprocess = train(train_set)
+    quit()
+    print([preprocess(m) for m in get_contents(test_set)][0])
