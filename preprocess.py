@@ -44,6 +44,7 @@ if __name__ == '__main__':
     train_set = open(train_file, 'r', encoding='utf8').readlines()
     test_set = open(test_file, 'r', encoding='utf8').readlines()
     
-    preprocess = train(train_set)
+    bow = train_bag_of_words(train_set)
+    
     quit()
     print([preprocess(m) for m in get_contents(test_set)][0])
