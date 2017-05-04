@@ -11,7 +11,6 @@ def get_contents(csv):
 
 
 def train_bag_of_words(csv):
-    print("  estimant bag_of_words...")
     d = {}
     k = 1
     for message in get_contents(csv):
