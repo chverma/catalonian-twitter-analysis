@@ -21,12 +21,12 @@ class SVM(StatModel):
             resp =  numpy.float32( [self.model.predict(s) for s in samples])
         #resp = self.model.predict(samples)
         err = (labels != resp).mean()
-        print 'error: %.2f %%' % (err*100)
+        print('error: %.2f %%') % (err*100)
 
         confusion = numpy.zeros((defaults.CLASS_N, defaults.CLASS_N), numpy.int32)
         for i, j in zip(labels, resp):
             confusion[i, j] += 1
-        print 'confusion matrix:'
-        print confusion
-        print
-        return confusion
+        print('confusion matrix:')
+        print (confusion)
+        print()
+        return( confusion)
