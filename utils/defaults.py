@@ -1,1 +1,1 @@
-CLASS_N = 5
+CLASS_N = 3
