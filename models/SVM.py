@@ -44,4 +44,4 @@ class SVM(StatModel):
             recall[i] = confusion[i, i] / sum(confusion[:, i])
             f1[i] = 2 * (precision[i] * recall[i]) / (precision[i] + recall[i])
             print("%i\t%.3f\t%.3f\t%.3f" % (i, precision[i], recall[i], f1[i]))
-        print("avg(0,2)\t%.3f\t%.3f\t%.3f" % (sum(precision[i] for i in [0, 2])/2, sum(recall for i in [0, 2])/2, sum(f1 for i in [0, 2])/2))
+        print("avg\t%.3f\t%.3f\t%.3f" % (sum(precision[i] for i in [0, 2])/2, sum(recall[i] for i in [0, 2])/2, sum(f1[i] for i in [0, 2])/2))
