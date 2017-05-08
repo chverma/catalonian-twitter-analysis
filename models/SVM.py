@@ -2,6 +2,8 @@ from models.StatModel import StatModel
 import utils.defaults as defaults
 import cv2
 import numpy
+
+
 class SVM(StatModel):
     def __init__(self, C=None, gamma=None):
         self.model = cv2.ml.SVM_create()
@@ -20,17 +22,26 @@ class SVM(StatModel):
         return self.model.predict(samples)[1].ravel()
 
     def evaluate(self, samples, labels, resp=None):
-        if resp==None:
-            resp =  self.predict(samples)
-        #resp = self.model.predict(samples)
+        if resp is None:
+            resp = self.predict(samples)
+
         err = (labels != resp).mean()
         print('error:', (err*100))
 
-        confusion = numpy.zeros((defaults.CLASS_N, defaults.CLASS_N), numpy.int32)
-        print(type(labels[0]), type(resp[0]))
+        confusion = numpy.zeros((defaults.CLASS_N, defaults.CLASS_N), numpy.float32)
         for i, j in zip(labels, numpy.int8(resp)):
-            confusion[i, j] += 1
+            confusion[i, j] += 1.
+
         print('confusion matrix:')
         print (confusion)
         print()
-        return( confusion)
+        precision = [0.]*defaults.CLASS_N
+        recall = [0.]*defaults.CLASS_N
+        f1 = [0.]*defaults.CLASS_N
+        print("class\tprec\trecall\tf1-score")
+        for i in range(defaults.CLASS_N):
+            precision[i] = confusion[i, i] / sum(confusion[i, :])
+            recall[i] = sum(confusion[j, j] for j in range(defaults.CLASS_N) if j != i) / (sum(confusion[j, j] for j in range(defaults.CLASS_N) if j != i) + sum(confusion[i, j] for j in range(defaults.CLASS_N) if j != i))
+            f1[i] = 2 * (precision[i] * recall[i]) / (precision[i] + recall[i])
+            print("%i\t%.3f\t%.3f\t%.3f" % (i, precision[i], recall[i], f1[i]))
+        print("avg(0,2)\t%.3f\t%.3f\t%.3f" % (sum(precision[i] for i in [0, 2])/2, sum(recall for i in [0, 2])/2, sum(f1 for i in [0, 2])/2))
