@@ -41,7 +41,7 @@ class SVM(StatModel):
         print("class\tprec\trecall\tf1-score")
         for i in range(defaults.CLASS_N):
             precision[i] = confusion[i, i] / sum(confusion[i, :])
-            recall[i] = sum(confusion[j, j] for j in range(defaults.CLASS_N) if j != i) / (sum(confusion[j, j] for j in range(defaults.CLASS_N) if j != i) + sum(confusion[i, j] for j in range(defaults.CLASS_N) if j != i))
+            recall[i] = confusion[i, i] / sum(confusion[:, i])
             f1[i] = 2 * (precision[i] * recall[i]) / (precision[i] + recall[i])
             print("%i\t%.3f\t%.3f\t%.3f" % (i, precision[i], recall[i], f1[i]))
         print("avg(0,2)\t%.3f\t%.3f\t%.3f" % (sum(precision[i] for i in [0, 2])/2, sum(recall for i in [0, 2])/2, sum(f1 for i in [0, 2])/2))
